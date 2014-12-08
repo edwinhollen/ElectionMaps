@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Election maps!</title>
+
+	<style>
+		body{
+			font-family: 'Georgia', serif;
+		}
+		article h1{
+			font-weight: normal;
+			font-size: 3em;
+		}
+	</style>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
+	
+</head>
+<body>
+	<div class="maps"></div>
+
+	<script>
+	var startYear = 1972;
+	var endYear = 2004;
+	var url = 'http://en.wikipedia.org/w/api.php?action=query&titles=United_States_presidential_election,_???&prop=pageimages&format=json&pithumbsize=480&callback=?';
+	for(var x = startYear; x < endYear; x += 4){
+		var article = document.createElement('article');
+		article.id = x;
+		$(article).append('<h1>'+x+'</h1>');
+		$('.maps').append(article);
+		
+		
+		$.get(url.replace('???', x), function(data){
+			var id = data.query.normalized[0].to.split('election, ')[1];
+			$('#'+id).append('<img src='+data.query.pages[Object.keys(data.query.pages)[0]].thumbnail.source+'>');
+		});
+		
+	}
+	</script>
+</body>
+</html>
