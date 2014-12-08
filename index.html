@@ -23,7 +23,7 @@
 	<script>
 	var startYear = 1972;
 	var endYear = 2004;
-	var url = 'http://en.wikipedia.org/w/api.php?action=query&titles=United_States_presidential_election,_???&prop=pageimages&format=json&pithumbsize=480&callback=?';
+	var url = 'http://en.wikipedia.org/w/api.php?action=query&titles=United_States_presidential_election,_???&prop=pageimages&format=json&pithumbsize=480';
 	for(var x = startYear; x < endYear; x += 4){
 		var article = document.createElement('article');
 		article.id = x;
@@ -31,7 +31,7 @@
 		$('.maps').append(article);
 		
 		
-		$.get(url.replace('???', x), function(data){
+		$.getJSON(url.replace('???', x), function(data){
 			var id = data.query.normalized[0].to.split('election, ')[1];
 			$('#'+id).append('<img src='+data.query.pages[Object.keys(data.query.pages)[0]].thumbnail.source+'>');
 		});
